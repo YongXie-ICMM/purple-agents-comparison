@@ -47,7 +47,7 @@ jobs:
           FROM python:3.11-slim
           WORKDIR /app
           COPY v1_high_performance/requirements.txt* ./
-          RUN pip install --no-cache-dir requests fastapi uvicorn || true
+          RUN pip install --no-cache-dir requests fastapi uvicorn
           COPY v1_high_performance/ .
           EXPOSE 9009
           HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 \
@@ -98,7 +98,7 @@ jobs:
           FROM python:3.11-slim
           WORKDIR /app
           COPY v2_medium_performance/requirements.txt* ./
-          RUN pip install --no-cache-dir requests fastapi uvicorn || true
+          RUN pip install --no-cache-dir requests fastapi uvicorn
           COPY v2_medium_performance/ .
           EXPOSE 9009
           HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 \
