@@ -18,12 +18,14 @@ import os
 import sys
 from pathlib import Path
 
+# Server mode imports
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+import uvicorn
+
 # Server mode imports (lazy)
 def run_server(host: str, port: int, card_url: str) -> None:
     """Start FastAPI server for AgentBeats runner."""
-    from fastapi import FastAPI, Request
-    from fastapi.responses import JSONResponse
-    import uvicorn
 
     app = FastAPI(title="Purple Comtrade Baseline v2")
 

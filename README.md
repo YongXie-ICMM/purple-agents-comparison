@@ -1,169 +1,110 @@
-# Purple Agents - Three Performance Variants
+# Purple Agents - Performance Comparison Suite
 
-This directory contains three Purple Agent implementations at different performance levels, demonstrating the Green Agent scoring system's ability to differentiate code quality.
+Three Purple Agent implementations demonstrating different levels of code quality and observability, designed for the [Green Comtrade Bench](https://github.com/YongXie-ICMM/green-comtrade-bench-enhanced) evaluation system.
 
-## 📁 Directory Structure
+## 🎯 Overview
+
+This repository contains three Purple Agent variants that achieve different scores on the Green Agent benchmark, primarily differing in their logging structure and observability features.
+
+## 📊 Performance Results
+
+| Version | Score | Average | Key Feature |
+|:---|:---:|:---:|:---|
+| **V1 - High Performance** | 527.4/700 | **75.3%** | Full structured logging |
+| **V2 - Medium Performance** | 495.0/700 | **70.7%** | Partial structured logging |
+| **V3 - Baseline** | 464.5/700 | **66.4%** | Basic logging |
+
+**Score Gap:** V1 outperforms V3 by **62.9 points** (9% difference)
+
+## 📁 Repository Structure
 
 ```
-purple_agents/
-├── v1_high_performance/     # V1 - High Performance (75.3%)
-├── v2_medium_performance/   # V2 - Medium Performance (70.7%)
-└── v3_baseline/             # V3 - Baseline (66.4%)
+purple-agents/
+├── v1_high_performance/     # 75.3% - Production-ready
+├── v2_medium_performance/   # 70.7% - Testing-ready
+├── v3_baseline/             # 66.4% - Reference implementation
+└── README.md
 ```
 
-## 📊 Performance Comparison
+## 🚀 Quick Start
 
-| Version | Score | Average | Observability | Key Features |
-|:---|:---:|:---:|:---:|:---|
-| **V1** | 527.4/700 | **75.3%** | 15/15 | Full structured logging |
-| **V2** | 495.0/700 | **70.7%** | ~9/15 | Partial structured logging |
-| **V3** | 464.5/700 | **66.4%** | ~3.75/15 | Basic logging |
+### Prerequisites
 
-## 🔍 Version Details
+- Python 3.8+
+- Running Green Comtrade Bench mock service
+- Docker (optional, for full environment)
 
-### V1 - High Performance (v1_high_performance/)
+### Running an Agent
 
-**Score: 527.4/700 (75.3%)**
+```bash
+# Choose a version
+cd v1_high_performance
 
-**Features:**
+# Run a single task
+python3 run.py --task-id T1_single_page \
+               --mock-url http://localhost:8000 \
+               --output-dir ./output
+```
+
+## 🔍 Version Comparison
+
+### V1 - High Performance (75.3%)
 - ✅ Full structured logging: `[task_id=X] [page=Y] [request=Z] [complete=true]`
-- ✅ Detailed performance metrics tracking
-- ✅ Complete error statistics (http_429, http_500)
-- ✅ Precise retry efficiency recording
+- ✅ Detailed performance metrics
+- ✅ Complete error statistics
+- **Observability:** 15/15 points
 
-**Log Example:**
-```
-INFO: [task_id=T1_single_page] [page=1] [request=2] [complete=true] Fetched 800 rows
-```
-
-**Recommended for:**
-- 🏢 Production environments
-- 📊 Detailed performance tracking needs
-- 🔍 Complex debugging scenarios
-
-### V2 - Medium Performance (v2_medium_performance/)
-
-**Score: 495.0/700 (70.7%)**
-
-**Features:**
+### V2 - Medium Performance (70.7%)
 - ✅ Partial structured logging: `[task_id=X] [page=Y] INFO: Message`
 - ✅ Basic traceability
-- ✅ Standard retry logic
-- ⚠️ Missing request field and complete marker
+- ⚠️ Missing request field
+- **Observability:** ~9/15 points
 
-**Log Example:**
-```
-[task_id=T1_single_page] [page=1] INFO: Fetching page 1
-```
-
-**Recommended for:**
-- 🧪 Testing environments
-- 📋 Medium complexity projects
-- 👥 Small team collaboration
-
-### V3 - Baseline (v3_baseline/)
-
-**Score: 464.5/700 (66.4%)**
-
-**Features:**
+### V3 - Baseline (66.4%)
 - ⚠️ Basic logging: `INFO: Message`
-- ⚠️ Minimal implementation
-- ⚠️ No structured fields
 - ✅ Core functionality complete
+- ⚠️ No structured fields
+- **Observability:** ~3.75/15 points
 
-**Log Example:**
-```
-INFO: Fetching page 1
-INFO: Task T1_single_page complete
-```
+## 📈 Score Breakdown
 
-**Recommended for:**
-- 📚 Learning reference
-- 🔬 Minimal dependencies
-- 🎓 Educational purposes
+### By Task (100 points each)
 
-## 🚀 Usage
+| Task | V1 | V2 | V3 |
+|:---|:---:|:---:|:---:|
+| T1_single_page | 75.3 | 71.2 | 67.2 |
+| T2_multi_page | 75.3 | 71.2 | 67.2 |
+| T3_duplicates | 75.3 | 71.2 | 65.8 |
+| T4_rate_limit_429 | 78.4 | 71.7 | 67.8 |
+| T5_server_error_500 | 76.7 | 71.7 | 67.8 |
+| T6_page_drift | 72.0 | 67.8 | 63.9 |
+| T7_totals_trap | 74.4 | 70.2 | 64.8 |
 
-### Run V1 (High Performance)
-
-```bash
-cd purple_agents/v1_high_performance
-python3 run.py --task-id T1_single_page --mock-url http://localhost:8000 --output-dir ./output
-```
-
-### Run V2 (Medium Performance)
-
-```bash
-cd purple_agents/v2_medium_performance
-python3 run.py --task-id T1_single_page --mock-url http://localhost:8000 --output-dir ./output
-```
-
-### Run V3 (Baseline)
-
-```bash
-cd purple_agents/v3_baseline
-python3 run.py --task-id T1_single_page --mock-url http://localhost:8000 --output-dir ./output
-```
-
-## 📈 Score Breakdown Analysis
-
-### Observability Score Comparison
-
-| Version | Structure Level | Score | Gap |
-|:---|:---|:---:|:---|
-| V1 | Full structured | 15/15 | Baseline |
-| V2 | Partial structured | ~9/15 | -6 pts |
-| V3 | Basic logging | ~3.75/15 | -11.25 pts |
-
-### Why V2 Scores 30.5 Points Higher Than V3?
-
-**V2 Advantages:**
-1. Partial structured logging (+4-5 pts/task)
-2. Traceable task_id and page fields (+1-2 pts/task)
-3. Better debugging experience
-
-**V3 Disadvantages:**
-1. Missing structured fields (-4-5 pts/task)
-2. Difficult to parse automatically (-1-2 pts/task)
-3. Poor traceability
-
-## 🎯 Selection Guide
-
-| Scenario | Recommended | Reason |
-|:---|:---:|:---|
-| Production | V1 | Best observability and debugging |
-| Testing | V2 | Balanced performance and complexity |
-| Learning | V3 | Simplest implementation |
-| High performance needs | V1 | Detailed performance metrics |
-| Quick prototyping | V3 | Minimal dependencies |
-
-## 📝 Technical Details
+## 🛠️ Technical Details
 
 ### Common Features
-
-All three versions implement:
 - ✅ Correct pagination logic
 - ✅ Exponential backoff retry
 - ✅ Deduplication and sorting
-- ✅ Totals row filtering (T7 task)
-- ✅ Complete output files (data.jsonl, metadata.json, run.log)
+- ✅ Totals row filtering
+- ✅ Complete output files
 
 ### Key Differences
-
 | Feature | V1 | V2 | V3 |
 |:---|:---:|:---:|:---:|
-| Full structured logging | ✅ | ❌ | ❌ |
-| Partial structured logging | ✅ | ✅ | ❌ |
-| Request field | ✅ | ❌ | ❌ |
-| Complete marker | ✅ | ❌ | ❌ |
-| Detailed error stats | ✅ | ⚠️ | ❌ |
+| Structured logging | Full | Partial | None |
+| Request tracking | ✅ | ❌ | ❌ |
+| Completion markers | ✅ | ❌ | ❌ |
 
-## 🔗 Related Resources
+## 📚 Related Resources
 
-- [Green Agent Scoring System](../src/judge.py)
-- [Scoring Documentation](../README.md)
-- [Test Fixtures](../mock_service/fixtures/)
+- **Green Comtrade Bench:** https://github.com/YongXie-ICMM/green-comtrade-bench-enhanced
+- **Scoring Documentation:** See Green Agent README
+
+## 📄 License
+
+MIT License
 
 ---
 
-**Note:** All three versions have identical core functionality. The main differences are in logging structure and observability. Choose based on your specific requirements and environment.
+**Note:** These agents have identical core functionality. Choose based on your observability requirements.
