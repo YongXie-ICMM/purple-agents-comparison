@@ -47,6 +47,7 @@ jobs:
           FROM python:3.11-slim
           WORKDIR /app
           COPY v1_high_performance/requirements.txt* ./
+          RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
           RUN pip install --no-cache-dir requests fastapi uvicorn
           COPY v1_high_performance/ .
           EXPOSE 9009
@@ -98,6 +99,7 @@ jobs:
           FROM python:3.11-slim
           WORKDIR /app
           COPY v2_medium_performance/requirements.txt* ./
+          RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
           RUN pip install --no-cache-dir requests fastapi uvicorn
           COPY v2_medium_performance/ .
           EXPOSE 9009
